@@ -99,7 +99,6 @@ for iGLM = 1:size(all_GLMs)
     grp_lvl_dir = fullfile (output_dir, 'group', analysis_dir );
     mkdir(grp_lvl_dir)
 
-
     contrasts_file_ls = struct('con_name', {}, 'con_file', {});
 
 
