@@ -56,8 +56,12 @@ Subjects kicked out:
 - 18, 22, 110, 116: too much movement overall
 - 31: "noisy" anatomical scan
 
+For the moment, this is hard-coded (don't 8 me!) in the rm_subjects.m function.
+
 
 ## docker
+
+What follows is just some general help and comments on using docker in case you never did before.
 
 ### 'Creating' a docker image
 
