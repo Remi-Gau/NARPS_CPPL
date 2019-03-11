@@ -50,6 +50,12 @@ Type in the following command to copy the relevant files and unzip them:
 Type in the following command to copy the relevant files and unzip them:
 `step_4_run_second_level.m`
 
+Subjects kicked out:
+- 56: switched behavioral response
+- 16, 30, 88, 100: too much movement on a single run
+- 18, 22, 110, 116: too much movement overall
+- 31: "noisy" anatomical scan
+
 
 ## docker
 

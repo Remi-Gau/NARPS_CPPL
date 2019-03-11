@@ -16,8 +16,8 @@ thresh = 0.5; %FD threshold to "censor" timepoints
 %% Load fMRIprep confound reports
 % stores only the FD values and separates them into 2 groups
 
-code_dir = pwd;
-[~]  = addpath(fullfile(code_dir,'subfun'));
+machine_id = 1;
+[data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
 
 % Get which participant is in which group
 participants_file = fullfile(code_dir, 'inputs', 'event_tsvs','participants.tsv');

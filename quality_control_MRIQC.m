@@ -201,7 +201,9 @@ for i_field = 1:numel(field_names)
     [outliers_BOLD(:,i_field)] = iqr_method(tmp, unilat); 
 end
 
-% print subjects' names that are outlier for at least 1 metric
-BOLD.bids_name(sum(outliers_BOLD, 2)>0)
+% print subjects' list that are outlier for at least 1 metric
+LS = BOLD.bids_name(sum(outliers_BOLD, 2)>0)
 
-
+A = char(LS);
+A = unique(str2num(A(:,5:7)));
+disp(A(randperm(numel(A))))
