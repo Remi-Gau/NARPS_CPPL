@@ -58,6 +58,17 @@ Subjects kicked out:
 
 For the moment, this is hard-coded (don't 8 me!) in the rm_subjects.m function.
 
+The group level analysis will be found in the `/derivatives/spm12/group/GLM*` folder.
+
+Each group or between group analysis are in different subfolders.
+
+The following folders contain the relevant group level GLMs:
+- `ttest_gamble_trialxgain_sup_baseline` : positive parametric effect of gain
+- `ttest_gamble_trialxloss_inf_baseline` : negative parametric effect of loss
+- `ttest_gamble_trialxloss_sup_baseline` : positive parametric effect of loss
+
+There is only one contrast of interest per group analysis.
+
 ### Making ROIs from neurosynth
 The script `create_ROIs.m` will create the ROIs used to test each hypothesis.
 
@@ -65,4 +76,4 @@ The script `create_ROIs.m` will create the ROIs used to test each hypothesis.
 Each of the 9 contrasts corresponding to the 9 hypothesis tested were enhanced using the [pTFCE toolbox](https://github.com/spisakt/pTFCE/releases/tag/v0.1.3). This was run on windows 10 with matlab 2018b as we could not incorporate it into the docker.
 
 ### final inference
-Display the results for each hypothesis using the SPM GUI and the right ROI as inclusice mask to look for any activate voxel. This most likely will require matlab.
+Display the results for each hypothesis using the SPM GUI and the right ROI as inclusive mask to look for any activate voxel. This most likely will require matlab.
