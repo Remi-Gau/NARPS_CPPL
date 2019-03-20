@@ -24,28 +24,29 @@ if nargin == 1
     out = 1;
 end
 
-a=a(:);n=length(a);
+a=a(:);
+n=length(a);
 
 % inter-quartile range
-j=floor(length(a)/4 + 5/12);
+j=floor(n/4 + 5/12);
 
 y=sort(a);
 
-g=(length(a)/4)-j+(5/12);
+g = (n/4)-j+(5/12);
 
-q1=(1-g).*y(j)+g.*y(j+1); 
+q1 = (1-g).*y(j) + g.*y(j+1); 
 
-k=length(a)-j+1;
-q2=(1-g).*y(k)+g.*y(k-1); 
+k = n-j+1;
+q2 = (1-g).*y(k) + g.*y(k-1); 
 
-value=q2-q1;
+value = q2 - q1;
 
 % outliers
 M = median(a);
-k=(17.63*n-23.64)/(7.74*n-3.71);
+k = (17.63*n-23.64)/(7.74*n-3.71);
 if out == 1
-    I=a<(M-k*value) | a>(M+k*value);
+    I = a < (M-k*value) | a > (M+k*value);
 else
-    I= a>(M+k*value); % only reject data with a too high value
+    I = a > (M+k*value); % only reject data with a too high value
 end
 I = I+isnan(a);
