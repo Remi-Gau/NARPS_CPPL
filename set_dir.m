@@ -14,7 +14,7 @@ switch machine_id
         output_dir = '/output/derivatives/spm12';
         addpath(fullfile('/opt/spm12'));
     case 1 % windows matlab/octave : Remi
-        code_dir = 'C:\Users\Remi\Documents\NARPS\code';
+        code_dir = 'D:\github\NARPS_CPPL';
         data_dir = 'C:\Users\Remi\Documents\NARPS\';
         output_dir = fullfile(data_dir, 'derivatives', 'spm12');
     case 2 % mac matlab/octave : Marco

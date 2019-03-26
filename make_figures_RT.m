@@ -7,8 +7,16 @@ clear
 clc
 close all
 
+% parameters to remove very fast RT <.5 secs
+% will then set RT to 0 and treat them like other missed trials
+rm_fast_trials = 0; 
+fast_trials_thres = 0.5;
+
+rm_participants = 0; % remove paritipants excluded from quality control
+
 machine_id = 1;
-[data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
+
+[~, code_dir] = set_dir(machine_id);
 
 % Get which participant is in which group
 participants_file = fullfile(code_dir, 'inputs', 'event_tsvs','participants.tsv');
@@ -17,8 +25,10 @@ participants = spm_load(participants_file);
 group_id = strcmp(participants.group, 'equalRange');
 
 % remove excluded subjects
-[participants, group_id] = ...
-    rm_subjects(participants, group_id, [], 1);
+if rm_participants
+    [participants, group_id] = ...
+        rm_subjects(participants, group_id, [], 1);
+end
 
 
 for i_group = 0:1 %loop through each group
@@ -36,9 +46,11 @@ for i_group = 0:1 %loop through each group
     range(i_group+1).loss = loss_range;
     
     for i_subj = 1:numel(group_idx)
-        
+
         % get data for each subject
         subject = participants.participant_id{ group_idx(i_subj) };
+        
+        fprintf(' loading %s\n', subject)
         
         files_2_load = spm_select('FPList', ...
             fullfile(code_dir, 'inputs', 'event_tsvs'), ...
@@ -61,11 +73,20 @@ for i_group = 0:1 %loop through each group
             for i_trial = 1:numel(data.onset)
                 loss = find( loss_range==data.loss(i_trial) ); % loss index
                 gain = find( gain_range==data.gain(i_trial) ); % loss index
-                if data.RT(i_trial)<.5 % only include RT with plausible RT
+                
+                % Just a sanity check to make sure that fast trials are not
+                % missed trials
+                if strcmp(data.participant_response(i_trial), 'NoResp') ...
+                        && data.RT(i_trial)~=0
+                    error('Some missed trials have an RT =/= from 0');
+                end
+                
+                if rm_fast_trials && data.RT(i_trial) < fast_trials_thres % only include RT with plausible RT
                     RT_mat(loss, gain, i_file) =  0; % store RT of this trial in matrix
                 else
                     RT_mat(loss, gain, i_file) = data.RT(i_trial);
                 end
+                
             end
         end
         
@@ -87,7 +108,7 @@ for i_group = 0:1 %loop through each group
         RT_mat_grp{i_group+1}(:,:,i_subj) = nanmean(RT_mat, 3);
         
     end
-
+    
 end
 
 
