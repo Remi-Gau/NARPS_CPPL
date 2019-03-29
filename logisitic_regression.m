@@ -1,9 +1,9 @@
-% runs a logistic regressions on the subject response (1 = accept ; 0 =
+% runs a dirty logistic regressions on the subject response (1 = accept ; 0 =
 % reject) to be explained by gain, loss + constant for every trial
 
-% check the distribution of beta_gain and beta_loss 
+% check the distribution of beta_gain and beta_loss
 
-% check the distribution of lambda (- beta_loss / beta_gain) across age 
+% check the distribution of lambda (- beta_loss / beta_gain) across age
 % and gender in each group
 
 clear
@@ -24,62 +24,62 @@ group_id = strcmp(participants.group, 'equalRange');
     rm_subjects(participants, group_id, [], 1);
 
 for i_group = 0:1 %loop through each group
-    
+
     group_idx = find(group_id==i_group); % index of each subject
-    
+
     for i_subj = 1:numel(group_idx)
-        
+
         % get data for each subject
         subject = participants.participant_id{ group_idx(i_subj) };
-        
+
         files_2_load = spm_select('FPList', ...
             fullfile(code_dir, 'inputs', 'event_tsvs'), ...
             ['^' subject '.*.tsv$']);
-        
+
         gain_all = [];
         loss_all = [];
         resp_all = [];
-        
+
         for i_file = 1:size(files_2_load)
-            
+
             % load each event file
             data = spm_load(files_2_load(i_file, :));
-            
+
             % kick out trials with no response or with responses below 500
             % ms
             to_remove = any(...
                 [strcmp(data.participant_response, 'NoResp'), ...
                  data.RT<0.5], 2);
-            
+
              % get gain, loss value of each trial
              gain = data.gain(~to_remove);
              loss = data.loss(~to_remove);
 
              % convert responses to accept (1) or reject (0)
              resp = any(...
-                 [strcmp(data.participant_response, 'weakly_accept'), ... 
-                  strcmp(data.participant_response, 'strongly_accept')], 2); 
+                 [strcmp(data.participant_response, 'weakly_accept'), ...
+                  strcmp(data.participant_response, 'strongly_accept')], 2);
              resp(to_remove) = [];
-             
+
              % stores them to do the regression collasped across runs.
              gain_all = cat(1,gain_all, gain);
              loss_all = cat(1,loss_all, loss);
              resp_all = cat(1,resp_all, resp);
-             
+
              % mean center gain and losses
              gain = gain-mean(gain);
              loss = loss-mean(loss);
-             
+
              % create design matrix
              X = [gain loss ones(size(gain))];
              Y = round(resp);
-             
+
              % logistic regression using GLM
              B{i_group+1}(i_subj, :, i_file) = pinv(X)*Y; %#ok<*SAGROW>
 %              B = mnrfit(X,Y)
 
         end
-        
+
         % GLM on all data
         gain_all = gain_all - mean(gain_all);
         loss_all = loss_all - mean(loss_all);
@@ -88,7 +88,7 @@ for i_group = 0:1 %loop through each group
         B_all{i_group+1}(i_subj, :) = pinv(X)*Y; %#ok<*SAGROW>
 
     end
-    
+
 end
 
 
@@ -133,7 +133,7 @@ xlabel('Beta')
 % axis([0.5 2.5 0 0.1])
 
 
-%% plot lambda ('- beta_{loss} / beta_{gain}') 
+%% plot lambda ('- beta_{loss} / beta_{gain}')
 figure('name', 'lambdas')
 
 subplot(1, 2, 1)

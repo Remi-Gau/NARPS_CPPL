@@ -1,6 +1,8 @@
 # NARPS_CPPL
 Code for the CPPL participation to NARPS
 
+Some of the MRIQC and fMRIprep output was integrated to this repository in the folder `/inputs` to make it standalone.
+
 ## Running the analysis
 
 See further down for more info about docker and containers.
@@ -46,6 +48,20 @@ Type in the following command to copy the relevant files and unzip them:
 Type in the following command to copy the relevant files and unzip them:
 `step_3_run_first_level.m`
 
+
+### Quality control
+Several scripts were created to vizualize participants' reactions times, or fMRIprep and MRIQC outputs.
+
+For example:
+
+All the `quality_control*.m` scripts.
+
+`make_figures_RT.m` collects subject RT and plots how they are distributed across gain and loss on average at the group level and for each subject. It also checks overall distributions of RT for each subjects and missed responses.
+
+`make_figures_accept_reject.m` collects subject responses (1 = weak accept ; 2 = strong accept ; -1 = weak reject ; -2 = strong reject) and plots how they are distributed across gain and loss on average at the group level and for each subject
+
+
+
 ### Running the group level GLM
 Type in the following command to copy the relevant files and unzip them:
 `step_4_run_second_level.m`
@@ -69,11 +85,14 @@ The following folders contain the relevant group level GLMs:
 
 There is only one contrast of interest per group analysis.
 
+
 ### Making ROIs from neurosynth
 The script `create_ROIs.m` will create the ROIs used to test each hypothesis.
+
 
 ### pTFCE enhancement of the final results.
 Each of the 9 contrasts corresponding to the 9 hypothesis tested were enhanced using the [pTFCE toolbox](https://github.com/spisakt/pTFCE/releases/tag/v0.1.3). This was run on windows 10 with matlab 2018b as we could not incorporate it into the docker.
 
-### final inference
+
+### Final inference
 Display the results for each hypothesis using the SPM GUI and the right ROI as inclusive mask to look for any activate voxel. This most likely will require matlab.

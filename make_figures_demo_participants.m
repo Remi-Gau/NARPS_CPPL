@@ -1,3 +1,5 @@
+% script to vizalize the demographics of the participants in each group
+
 machine_id = 1;
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
 
