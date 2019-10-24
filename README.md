@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/160351501.svg)](https://zenodo.org/badge/latestdoi/160351501)
+
 # NARPS_CPPL
 Code for the CPPL participation to NARPS
 
