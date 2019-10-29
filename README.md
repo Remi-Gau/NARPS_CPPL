@@ -17,7 +17,7 @@ You can specify to the container where your code and data are when you call it.
 Below are the commands examples we used to run this analysis
 
 ### Start the docker image
-Run the following to start the octave-SPM docker image. The equivalent docker image will be uploaded to docker hub later for better reproducibility as docker images are not tagged on the SPM docker hub repository.
+Run the following to start the octave-SPM docker image. The equivalent docker image has been uploaded to [docker hub](https://cloud.docker.com/repository/docker/remigau/cppl-narps/general) for better reproducibility as docker images are not tagged on the SPM docker hub repository.
 
 ```
 docker run -it --rm \
